@@ -36,14 +36,18 @@ export default function StarWars() {
             });
     }
 
-    function executeSearch() {
+    async function executeSearch(e) {
+        e.preventDefault();
         // To search for something on SWAPI: https://swapi.dev/api/people/?search=r2
-        const informationToGet = "https://swapi.dev/api/people/?search=" + input
-        results = getInformation(informationToGet);
-        // const results = axios.get(informationToGet)
-        console.log("Value entered =", input);
-        console.log("Value to be searched: ", informationToGet);
-        console.log("Results object: ", results);
+        // const informationToGet = "https://swapi.dev/api/people/?search=" + input
+        const informationToGet = "https://swapi.dev/api/people/?search="
+        // results = getInformation(informationToGet);
+        const results = await axios.get(informationToGet)
+        // console.log("Value entered =", input);
+        // console.log("Value to be searched: ", informationToGet);
+        console.log("Results object: ", results.data);
+        setResults(results.data.results)
+        console.log("Results.data.results = ", { results })
         // console.log("value results: ", results);
     }
 
@@ -67,6 +71,8 @@ export default function StarWars() {
             <Table
                 input={input}
                 setInput={setInput}
+                results={results}
+                setResults={setResults}
             />
         </>
     )
