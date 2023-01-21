@@ -7,15 +7,15 @@ const swapi = "https://swapi.dev/api/"
 
 export default function StarWars() {
     const [input, setInput] = useState("");
-    const [results, setResults] = useState();
+    const [results, setResults] = useState([]);
 
-    axios.get(swapi)
-        .then(response => {
-            console.log(response.data);
-        })
-        .catch(error => {
-            console.log(error);
-        });
+    // axios.get(swapi)
+    //     .then(response => {
+    //         console.log(response.data);
+    //     })
+    //     .catch(error => {
+    //         console.log(error);
+    //     });
 
     function handleChange(e) {
         e.preventDefault();
@@ -42,12 +42,28 @@ export default function StarWars() {
         // const informationToGet = "https://swapi.dev/api/people/?search=" + input
         const informationToGet = "https://swapi.dev/api/people/?search="
         // results = getInformation(informationToGet);
-        const results = await axios.get(informationToGet)
+        const response = await axios.get(informationToGet);
+        console.log("Results object: ", response.data);
+        console.log("Results object 1: ", response.data.results);
+        for (let i = 0; i < response.data.results.length; i++) {
+            // results[i]
+            const planetLocation = response.data.results[i].homeworld
+            const speciesLocation = response.data.results[i].species
+            const planet = await axios.get(planetLocation);
+            const species = await axios.get(speciesLocation);
+            console.log("Planet Search: ", planetLocation);
+            console.log("Species Search: ", speciesLocation);
+            console.log("Planet: ", planet.data.name);
+            console.log("species: ", species.data.name);
+            console.log("Results extract item: ", i);
+
+        }
         // console.log("Value entered =", input);
         // console.log("Value to be searched: ", informationToGet);
-        console.log("Results object: ", results.data);
-        setResults(results.data.results)
-        console.log("Results.data.results = ", { results })
+
+
+        setResults(response.data.results)
+        console.log("Results.data.results = ", { results: response })
         // console.log("value results: ", results);
     }
 
