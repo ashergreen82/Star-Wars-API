@@ -47,16 +47,18 @@ export default function StarWars() {
         console.log("Results object 1: ", response.data.results);
         for (let i = 0; i < response.data.results.length; i++) {
             // results[i]
-            const planetLocation = response.data.results[i].homeworld
-            const speciesLocation = response.data.results[i].species
+            const planetLocation = response.data.results[i].homeworld;
+            const speciesLocation = response.data.results[i].species;
             const planet = await axios.get(planetLocation);
             const species = await axios.get(speciesLocation);
+            response.data.results[i].homeworld = planet;
+            response.data.results[i].species = species;
+            // setResults(planet);
             console.log("Planet Search: ", planetLocation);
             console.log("Species Search: ", speciesLocation);
             console.log("Planet: ", planet.data.name);
             console.log("species: ", species.data.name);
             console.log("Results extract item: ", i);
-
         }
         // console.log("Value entered =", input);
         // console.log("Value to be searched: ", informationToGet);
@@ -64,6 +66,7 @@ export default function StarWars() {
 
         setResults(response.data.results)
         console.log("Results.data.results = ", { results: response })
+        console.log("Planet Results: ", response.data.results[0].planet)
         // console.log("value results: ", results);
     }
 
