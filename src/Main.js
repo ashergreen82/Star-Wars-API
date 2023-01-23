@@ -36,20 +36,26 @@ export default function StarWars() {
     }
     // executeSearch();
 
-    // const informationToGet = "https://swapi.dev/api/people/?search="
-    // // results = getInformation(informationToGet);
-    // const response = await axios.get(informationToGet);
-    // for (let i = 0; i < response.data.results.length; i++) {
-    //     // results[i]
-    //     const planetLocation = response.data.results[i].homeworld;
-    //     const speciesLocation = response.data.results[i].species;
-    //     const planet = await axios.get(planetLocation);
-    //     const species = await axios.get(speciesLocation);
-    //     response.data.results[i].homeworld = planet.data.name;
-    //     if (speciesLocation.length) response.data.results[i].species = species.data.name;
-    //     else response.data.results[i].species = "Human";
-    // }
-    // setResults(response.data.results)
+    useEffect(() => {
+        async function initialStart() {
+            console.log("Initial start sequence has started.")
+            const informationToGet = "https://swapi.dev/api/people/?search="
+            // results = getInformation(informationToGet);
+            const response = await axios.get(informationToGet);
+            for (let i = 0; i < response.data.results.length; i++) {
+                // results[i]
+                const planetLocation = response.data.results[i].homeworld;
+                const speciesLocation = response.data.results[i].species;
+                const planet = await axios.get(planetLocation);
+                const species = await axios.get(speciesLocation);
+                response.data.results[i].homeworld = planet.data.name;
+                if (speciesLocation.length) response.data.results[i].species = species.data.name;
+                else response.data.results[i].species = "Human";
+            }
+            setResults(response.data.results);
+        }
+        initialStart();
+    }, [])
 
     return (
         <>
