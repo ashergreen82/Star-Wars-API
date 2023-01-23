@@ -9,29 +9,10 @@ export default function StarWars() {
     const [input, setInput] = useState("");
     const [results, setResults] = useState([]);
 
-    // axios.get(swapi)
-    //     .then(response => {
-    //         console.log(response.data);
-    //     })
-    //     .catch(error => {
-    //         console.log(error);
-    //     });
-
     function handleChange(e) {
         e.preventDefault();
         setInput(e.target.value);
     }
-
-    // function getInformation(informationToGet) {
-    //     console.log("getInformation function executed")
-    //     axios.get(informationToGet)
-    //         .then(response => {
-    //             console.log("getInformation function results: ", response.data);
-    //         })
-    //         .catch(error => {
-    //             console.log(error);
-    //         });
-    // }
 
     async function executeSearch(e) {
         e.preventDefault();
@@ -53,6 +34,22 @@ export default function StarWars() {
 
         setResults(response.data.results)
     }
+    // executeSearch();
+
+    // const informationToGet = "https://swapi.dev/api/people/?search="
+    // // results = getInformation(informationToGet);
+    // const response = await axios.get(informationToGet);
+    // for (let i = 0; i < response.data.results.length; i++) {
+    //     // results[i]
+    //     const planetLocation = response.data.results[i].homeworld;
+    //     const speciesLocation = response.data.results[i].species;
+    //     const planet = await axios.get(planetLocation);
+    //     const species = await axios.get(speciesLocation);
+    //     response.data.results[i].homeworld = planet.data.name;
+    //     if (speciesLocation.length) response.data.results[i].species = species.data.name;
+    //     else response.data.results[i].species = "Human";
+    // }
+    // setResults(response.data.results)
 
     return (
         <>
