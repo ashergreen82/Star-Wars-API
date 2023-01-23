@@ -20,21 +20,18 @@ export default function StarWars() {
     function handleChange(e) {
         e.preventDefault();
         setInput(e.target.value);
-        // console.log(e)
-        // console.log(e.target.value)
-        // console.log("This is what you would like to know about the Star Wars Universe: ", { input })
     }
 
-    function getInformation(informationToGet) {
-        console.log("getInformation function executed")
-        axios.get(informationToGet)
-            .then(response => {
-                console.log("getInformation function results: ", response.data);
-            })
-            .catch(error => {
-                console.log(error);
-            });
-    }
+    // function getInformation(informationToGet) {
+    //     console.log("getInformation function executed")
+    //     axios.get(informationToGet)
+    //         .then(response => {
+    //             console.log("getInformation function results: ", response.data);
+    //         })
+    //         .catch(error => {
+    //             console.log(error);
+    //         });
+    // }
 
     async function executeSearch(e) {
         e.preventDefault();
@@ -43,31 +40,18 @@ export default function StarWars() {
         const informationToGet = "https://swapi.dev/api/people/?search="
         // results = getInformation(informationToGet);
         const response = await axios.get(informationToGet);
-        console.log("Results object: ", response.data);
-        console.log("Results object 1: ", response.data.results);
         for (let i = 0; i < response.data.results.length; i++) {
             // results[i]
             const planetLocation = response.data.results[i].homeworld;
             const speciesLocation = response.data.results[i].species;
             const planet = await axios.get(planetLocation);
             const species = await axios.get(speciesLocation);
-            response.data.results[i].homeworld = planet;
-            response.data.results[i].species = species;
-            // setResults(planet);
-            console.log("Planet Search: ", planetLocation);
-            console.log("Species Search: ", speciesLocation);
-            console.log("Planet: ", planet.data.name);
-            console.log("species: ", species.data.name);
-            console.log("Results extract item: ", i);
+            response.data.results[i].homeworld = planet.data.name;
+            if (speciesLocation.length) response.data.results[i].species = species.data.name;
+            else response.data.results[i].species = "Human";
         }
-        // console.log("Value entered =", input);
-        // console.log("Value to be searched: ", informationToGet);
-
 
         setResults(response.data.results)
-        console.log("Results.data.results = ", { results: response })
-        console.log("Planet Results: ", response.data.results[0].planet)
-        // console.log("value results: ", results);
     }
 
     return (
@@ -85,7 +69,7 @@ export default function StarWars() {
                     placeholder="Which Star Wars character are you interested in learning about?"
                     required
                 />
-                <button type="button" class="btn btn-primary mt-3" onClick={executeSearch}>Search</button>
+                <button type="button" className="btn btn-primary mt-3" onClick={executeSearch}>Search</button>
             </div>
             <Table
                 input={input}

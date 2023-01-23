@@ -2,18 +2,18 @@ import axios from 'axios';
 
 export default function Table({ input, setInput, results, setResults }) {
 
-    const displayData = results.map((result, key) => (
-        <tr key={key} id={result.id}>
-            <td>{result.name}</td>
-            <td>{result.birth_year}</td>
-            <td>{result.height}</td>
-            <td>{result.mass}</td>
-            <td>{result.homeworld}</td>
-            {/* <td>{planetData(result.homeworld)}</td> */}
-            <td>{result.species}</td>
-            {/* <td>{species(result.species)}</td> */}
-        </tr>
-    ));
+    const displayData = results.map((result, key) => {
+        return (
+            <tr key={key} id={result.id}>
+                <td>{result.name}</td>
+                <td>{result.birth_year}</td>
+                <td>{result.height}</td>
+                <td>{result.mass}</td>
+                <td>{result.homeworld}</td>
+                <td>{result.species}</td>
+            </tr>
+        )
+    });
 
     function planetData(homeworld) {
         console.log("Planet data executed")
@@ -42,7 +42,9 @@ export default function Table({ input, setInput, results, setResults }) {
                     <th scope="col">Species</th>
                 </tr>
             </thead>
-            <tbody>{displayData}</tbody>
+            <tbody>
+                {displayData}
+            </tbody>
         </table>
     )
 }
