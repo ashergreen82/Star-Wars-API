@@ -46,7 +46,7 @@ export default function Table({ input, setInput, results, setResults }) {
                 {displayData}
             </tbody>
             <nav aria-label="Page navigation">
-                <ul className="pagination mt-3">
+                <ul className="pagination justify-content-md-center mt-3">
                     <li className="page-item"><a className="page-link" href="#">Previous</a></li>
                     <li className="page-item"><a className="page-link" href="#">1</a></li>
                     <li className="page-item"><a className="page-link" href="#">2</a></li>
@@ -56,6 +56,7 @@ export default function Table({ input, setInput, results, setResults }) {
                     <li className="page-item"><a className="page-link" href="#">6</a></li>
                     <li className="page-item"><a className="page-link" href="#">7</a></li>
                     <li className="page-item"><a className="page-link" href="#">8</a></li>
+                    <li className="page-item"><a className="page-link" href="#">9</a></li>
                     <li className="page-item"><a className="page-link" href="#">Next</a></li>
                 </ul>
             </nav>
