@@ -31,20 +31,22 @@ export default function Table({ input, setInput, results, setResults }) {
 
     console.log("Table Results: ", results)
     return (
-        <table className="table table-bordered table-striped table-primary mt-3">
-            <thead>
-                <tr>
-                    <th scope="col">Name</th>
-                    <th scope="col">Birthdate</th>
-                    <th scope="col">Height</th>
-                    <th scope="col">Mass</th>
-                    <th scope="col">Homeworld</th>
-                    <th scope="col">Species</th>
-                </tr>
-            </thead>
-            <tbody>
-                {displayData}
-            </tbody>
+        <>
+            <table className="table table-bordered table-striped table-primary mt-3">
+                <thead>
+                    <tr>
+                        <th scope="col">Name</th>
+                        <th scope="col">Birthdate</th>
+                        <th scope="col">Height</th>
+                        <th scope="col">Mass</th>
+                        <th scope="col">Homeworld</th>
+                        <th scope="col">Species</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {displayData}
+                </tbody>
+            </table>
             <nav aria-label="Page navigation">
                 <ul className="pagination justify-content-md-center mt-3">
                     <li className="page-item"><a className="page-link" href="#">Previous</a></li>
@@ -60,6 +62,6 @@ export default function Table({ input, setInput, results, setResults }) {
                     <li className="page-item"><a className="page-link" href="#">Next</a></li>
                 </ul>
             </nav>
-        </table>
+        </>
     )
 }
