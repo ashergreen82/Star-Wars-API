@@ -97,12 +97,6 @@ export default function StarWars() {
             </div>
             <button type="button" className="btn btn-primary mt-3 justify-content-md-center" onClick={executeSearch}>Search</button>
             {spinnerAndTable()}
-            {/* <Table
-                input={input}
-                setInput={setInput}
-                results={results}
-                setResults={setResults}
-            /> */}
         </>
     )
 }
