@@ -30,9 +30,12 @@ export default function Table({ input, setInput, results, setResults }) {
     }
 
     function pageNavigation(e) {
+        const informationToGet = "https://swapi.dev/api/people/?page="
         e.preventDefault();
         console.log("pageNavigation has executed");
-        console.log({ e }, "was pressed");
+        console.log("This is the value of e: ", { e });
+        console.log("this is the vlaue of e as not an object: ", e)
+        console.log(e.target.href, "was pressed");
 
     }
 
