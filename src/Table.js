@@ -29,9 +29,11 @@ export default function Table({ input, setInput, results, setResults }) {
         console.log("Species: ", planetResult)
     }
 
-    function pageNavigation(buttonPressed) {
+    function pageNavigation(e) {
+        e.preventDefault();
         console.log("pageNavigation has executed");
-        console.log({ buttonPressed }, "was pressed");
+        console.log({ e }, "was pressed");
+
     }
 
     console.log("Table Results: ", results)
@@ -54,17 +56,17 @@ export default function Table({ input, setInput, results, setResults }) {
             </table>
             <nav aria-label="Page navigation">
                 <ul className="pagination justify-content-md-center mt-3">
-                    <li className="page-item"><a className="page-link" href="#" onClick={pageNavigation}>Previous</a></li>
-                    <li className="page-item"><a className="page-link" href="#" onClick={pageNavigation}>1</a></li>
-                    <li className="page-item"><a className="page-link" href="#" onClick={pageNavigation}>2</a></li>
-                    <li className="page-item"><a className="page-link" href="#" onClick={pageNavigation}>3</a></li>
-                    <li className="page-item"><a className="page-link" href="#" onClick={pageNavigation}>4</a></li>
-                    <li className="page-item"><a className="page-link" href="#" onClick={pageNavigation}>5</a></li>
-                    <li className="page-item"><a className="page-link" href="#" onClick={pageNavigation}>6</a></li>
-                    <li className="page-item"><a className="page-link" href="#" onClick={pageNavigation}>7</a></li>
-                    <li className="page-item"><a className="page-link" href="#" onClick={pageNavigation}>8</a></li>
-                    <li className="page-item"><a className="page-link" href="#" onClick={pageNavigation}>9</a></li>
-                    <li className="page-item"><a className="page-link" href="#" onClick={pageNavigation}>Next</a></li>
+                    <li className="page-item"><a className="page-link" href="previous" onClick={pageNavigation}>Previous</a></li>
+                    <li className="page-item"><a className="page-link" href="1" onClick={pageNavigation}>1</a></li>
+                    <li className="page-item"><a className="page-link" href="2" onClick={pageNavigation}>2</a></li>
+                    <li className="page-item"><a className="page-link" href="3" onClick={pageNavigation}>3</a></li>
+                    <li className="page-item"><a className="page-link" href="4" onClick={pageNavigation}>4</a></li>
+                    <li className="page-item"><a className="page-link" href="5" onClick={pageNavigation}>5</a></li>
+                    <li className="page-item"><a className="page-link" href="6" onClick={pageNavigation}>6</a></li>
+                    <li className="page-item"><a className="page-link" href="7" onClick={pageNavigation}>7</a></li>
+                    <li className="page-item"><a className="page-link" href="8" onClick={pageNavigation}>8</a></li>
+                    <li className="page-item"><a className="page-link" href="9" onClick={pageNavigation}>9</a></li>
+                    <li className="page-item"><a className="page-link" href="next" onClick={pageNavigation}>Next</a></li>
                 </ul>
             </nav>
         </>

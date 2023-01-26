@@ -64,7 +64,7 @@ export default function StarWars() {
         if (loading) {
             return (
                 <div>
-                    <div className="spinner-border text-primary" role="status"></div>
+                    <div className="spinner-border text-primary mt-3" role="status"></div>
                     <div>Loading....</div>
                 </div>
             )
