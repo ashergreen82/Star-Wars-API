@@ -34,6 +34,16 @@ export default function Table({ input, setInput, results, setResults }) {
         const buttonPressed = e.target.innerText;
         const informationToGet = "https://swapi.dev/api/people/?page="
         const pagePointer = await axios.get(informationToGet + buttonPressed);
+        for (let i = 0; i < pagePointer.data.results.length; i++) {
+            // results[i]
+            const planetLocation = pagePointer.data.results[i].homeworld;
+            const speciesLocation = pagePointer.data.results[i].species;
+            const planet = await axios.get(planetLocation);
+            const species = await axios.get(speciesLocation);
+            pagePointer.data.results[i].homeworld = planet.data.name;
+            if (speciesLocation.length) pagePointer.data.results[i].species = species.data.name;
+            else pagePointer.data.results[i].species = "Human";
+        }
         console.log("pageNavigation has executed");
         console.log("This is the value of e: ", { e });
         console.log("this is the vlaue of e as not an object: ", e)

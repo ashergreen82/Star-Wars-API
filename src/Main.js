@@ -60,6 +60,19 @@ export default function StarWars() {
         initialStart();
     }, [])
 
+    // async function getPlanetAndSpecies() {
+    //     for (let i = 0; i < response.data.results.length; i++) {
+    //         // results[i]
+    //         const planetLocation = response.data.results[i].homeworld;
+    //         const speciesLocation = response.data.results[i].species;
+    //         const planet = await axios.get(planetLocation);
+    //         const species = await axios.get(speciesLocation);
+    //         response.data.results[i].homeworld = planet.data.name;
+    //         if (speciesLocation.length) response.data.results[i].species = species.data.name;
+    //         else response.data.results[i].species = "Human";
+    //     }
+    // }
+
     const spinnerAndTable = () => {
         if (loading) {
             return (
