@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export default function Table({ input, setInput, results, setResults }) {
+export default function Table({ input, setInput, results, setResults, loading, setLoading }) {
 
     const displayData = results.map((result, key) => {
         return (
@@ -15,22 +15,9 @@ export default function Table({ input, setInput, results, setResults }) {
         )
     });
 
-    // function planetData(homeworld) {
-    //     console.log("Planet data executed")
-    //     const informationToGet = "https://swapi.dev/api/planet/?search="
-    //     const planetResult = axios.get(homeworld)
-    //     console.log("Species: ", planetResult)
-    // }
-
-    // function species(species) {
-    //     console.log("Species data executed")
-    //     const informationToGet = "https://swapi.dev/api/species/?search="
-    //     const planetResult = axios.get(species)
-    //     console.log("Species: ", planetResult)
-    // }
-
     async function pageNavigation(e) {
         e.preventDefault();
+        setLoading(true);
         const buttonPressed = e.target.innerText;
         const informationToGet = "https://swapi.dev/api/people/?page="
         const pagePointer = await axios.get(informationToGet + buttonPressed);
@@ -54,6 +41,7 @@ export default function Table({ input, setInput, results, setResults }) {
         console.log("Page: ", { pagePointer });
         console.log("Page: ", pagePointer.data.results[0]);
         setResults(pagePointer.data.results);
+        setLoading(false);
     }
 
     console.log("Table Results: ", results)

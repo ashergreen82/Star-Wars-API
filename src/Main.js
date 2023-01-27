@@ -19,8 +19,8 @@ export default function StarWars() {
         e.preventDefault();
         setLoading(true);
         // To search for something on SWAPI: https://swapi.dev/api/people/?search=r2
-        // const informationToGet = "https://swapi.dev/api/people/?search=" + input
-        const informationToGet = "https://swapi.dev/api/people/?search="
+        const informationToGet = "https://swapi.dev/api/people/?search=" + input
+        // const informationToGet = "https://swapi.dev/api/people/?search="
         // results = getInformation(informationToGet);
         const response = await axios.get(informationToGet);
         for (let i = 0; i < response.data.results.length; i++) {
@@ -88,6 +88,8 @@ export default function StarWars() {
                 setInput={setInput}
                 results={results}
                 setResults={setResults}
+                loading={loading}
+                setLoading={setLoading}
             />
         )
     }
