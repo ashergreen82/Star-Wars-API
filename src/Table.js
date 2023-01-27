@@ -15,28 +15,35 @@ export default function Table({ input, setInput, results, setResults }) {
         )
     });
 
-    function planetData(homeworld) {
-        console.log("Planet data executed")
-        const informationToGet = "https://swapi.dev/api/planet/?search="
-        const planetResult = axios.get(homeworld)
-        console.log("Species: ", planetResult)
-    }
+    // function planetData(homeworld) {
+    //     console.log("Planet data executed")
+    //     const informationToGet = "https://swapi.dev/api/planet/?search="
+    //     const planetResult = axios.get(homeworld)
+    //     console.log("Species: ", planetResult)
+    // }
 
-    function species(species) {
-        console.log("Species data executed")
-        const informationToGet = "https://swapi.dev/api/species/?search="
-        const planetResult = axios.get(species)
-        console.log("Species: ", planetResult)
-    }
+    // function species(species) {
+    //     console.log("Species data executed")
+    //     const informationToGet = "https://swapi.dev/api/species/?search="
+    //     const planetResult = axios.get(species)
+    //     console.log("Species: ", planetResult)
+    // }
 
-    function pageNavigation(e) {
-        const informationToGet = "https://swapi.dev/api/people/?page="
+    async function pageNavigation(e) {
         e.preventDefault();
+        const buttonPressed = e.target.innerText;
+        const informationToGet = "https://swapi.dev/api/people/?page="
+        const pagePointer = await axios.get(informationToGet + buttonPressed);
         console.log("pageNavigation has executed");
         console.log("This is the value of e: ", { e });
         console.log("this is the vlaue of e as not an object: ", e)
         console.log(e.target.href, "was pressed");
-
+        console.log(e.target.innerText, "was pressed");
+        console.log("Page: ", pagePointer);
+        console.log("Page: ", pagePointer.data);
+        console.log("Page: ", { pagePointer });
+        console.log("Page: ", pagePointer.data.results[0]);
+        setResults(pagePointer.data.results);
     }
 
     console.log("Table Results: ", results)
