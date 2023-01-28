@@ -11,6 +11,7 @@ export default function StarWars() {
     const [input, setInput] = useState("");
     const [results, setResults] = useState([]);
     const [loading, setLoading] = useState(false);
+    let currentPage = "1"
 
     function handleChange(e) {
         e.preventDefault();
@@ -92,6 +93,7 @@ export default function StarWars() {
                 setResults={setResults}
                 loading={loading}
                 setLoading={setLoading}
+                currentPage={currentPage}
             />
         )
     }

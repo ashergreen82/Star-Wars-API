@@ -1,8 +1,9 @@
 import axios from 'axios';
 import { useRef, useEffect, useState } from 'react';
 
-export default function Table({ input, setInput, results, setResults, loading, setLoading }) {
-    const [currentPage, setcurrentPage] = useState("1");
+export default function Table({ input, setInput, results, setResults, loading, setLoading, currentPage }) {
+    // const [currentPage, setcurrentPage] = useState("1");
+    // let currentPage = "1"
 
     const displayData = results.map((result, key) => {
         return (
@@ -31,20 +32,25 @@ export default function Table({ input, setInput, results, setResults, loading, s
                 // setcurrentPage(currentPage.toString(Number(currentPage)) - 1);
                 tempValue = Number(currentPage) - 1;
                 if (tempValue < 1) {
-                    tempValue = 1
+                    tempValue = 1;
                 }
-                tempValue.toString();
-                setcurrentPage(tempValue);
+                // tempValue.toString();
+                // setcurrentPage(tempValue);
+                currentPage = String(tempValue);
+                break;
             case "Next":
                 // setcurrentPage(currentPage.toString(Number(currentPage)) + 1);
                 tempValue = Number(currentPage) + 1;
-                if (tempValue > 8) {
-                    tempValue = 8
+                if (tempValue > 9) {
+                    tempValue = 9;
                 }
-                tempValue.toString();
-                setcurrentPage(tempValue);
+                // tempValue.toString();
+                // setcurrentPage(tempValue);
+                currentPage = String(tempValue)
+                break;
             default:
-                setcurrentPage(buttonPressed);
+                // setcurrentPage(buttonPressed);
+                currentPage = buttonPressed;
         }
         // if (buttonPressed = "previous"){
         //     setcurrentPage(buttonPressed - 1)   
