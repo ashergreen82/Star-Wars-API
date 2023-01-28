@@ -21,15 +21,28 @@ export default function Table({ input, setInput, results, setResults, loading, s
         e.preventDefault();
         setLoading(true);
         const buttonPressed = e.target.innerText;
+        let tempValue = 0
         switch (buttonPressed) {
-            case Number(buttonPressed) < 1 || buttonPressed === "null":
-                setcurrentPage(buttonPressed = "1");
-            case Number(buttonPressed) > 9 || buttonPressed === "null":
-                setcurrentPage(buttonPressed = "8")
+            // case Number(buttonPressed) < 1 || buttonPressed === "null":
+            //     setcurrentPage("1");
+            // case Number(buttonPressed) > 9 || buttonPressed === "null":
+            //     setcurrentPage("8")
             case "Previous":
-                setcurrentPage(currentPage.toString(Number(currentPage)) - 1);
+                // setcurrentPage(currentPage.toString(Number(currentPage)) - 1);
+                tempValue = Number(currentPage) - 1;
+                if (tempValue < 1) {
+                    tempValue = 1
+                }
+                tempValue.toString();
+                setcurrentPage(tempValue);
             case "Next":
-                setcurrentPage(currentPage.toString(Number(currentPage)) + 1);
+                // setcurrentPage(currentPage.toString(Number(currentPage)) + 1);
+                tempValue = Number(currentPage) + 1;
+                if (tempValue > 8) {
+                    tempValue = 8
+                }
+                tempValue.toString();
+                setcurrentPage(tempValue);
             default:
                 setcurrentPage(buttonPressed);
         }
@@ -48,7 +61,7 @@ export default function Table({ input, setInput, results, setResults, loading, s
         //     setcurrentPage(buttonPressed);
         // }
         const informationToGet = "https://swapi.dev/api/people/?page="
-        const pagePointer = await axios.get(informationToGet + buttonPressed);
+        const pagePointer = await axios.get(informationToGet + currentPage);
         for (let i = 0; i < pagePointer.data.results.length; i++) {
             // results[i]
             const planetLocation = pagePointer.data.results[i].homeworld;
