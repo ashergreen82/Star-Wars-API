@@ -2,6 +2,8 @@ import React from 'react'
 import { useRef, useEffect, useState } from 'react';
 import axios from 'axios';
 import Table from "./Table"
+import background from "./images/background.jpg"
+import headerimage from "./images/Star_Wars_Logo.svg.png"
 
 const swapi = "https://swapi.dev/api/"
 
@@ -97,21 +99,26 @@ export default function StarWars() {
     return (
         <>
             <div>
-                <h1>Star Wars API</h1>
+                <div>
+                    <img id="header_image" src={headerimage}></img>
+                    {/* <h1>Star Wars API</h1> */}
+                </div>
+                <div className="user-input">
+                    <input
+                        id="searchRequest"
+                        type="text"
+                        className="form-control"
+                        value={input}
+                        onChange={handleChange}
+                        placeholder="Which Star Wars character are you interested in learning about?"
+                        required
+                    />
+                </div>
+                <div className="text-center">
+                    <button type="button" className="btn btn-primary mt-3 justify-content-md-center" onClick={executeSearch}>Search</button>
+                </div>
+                {spinnerAndTable()}
             </div>
-            <div className="user-input">
-                <input
-                    id="searchRequest"
-                    type="text"
-                    className="form-control"
-                    value={input}
-                    onChange={handleChange}
-                    placeholder="Which Star Wars character are you interested in learning about?"
-                    required
-                />
-            </div>
-            <button type="button" className="btn btn-primary mt-3 justify-content-md-center" onClick={executeSearch}>Search</button>
-            {spinnerAndTable()}
         </>
     )
 }
