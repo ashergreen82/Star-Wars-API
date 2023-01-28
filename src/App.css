@@ -7,11 +7,12 @@ body {
 }
 
 #header_image {
-
   display: block;
   margin-left: auto;
   margin-right: auto;
-  width: 50%;
+  width: 700px;
+  height: 250px;
+  margin-bottom: 25px;
 }
 
 .App-logo {

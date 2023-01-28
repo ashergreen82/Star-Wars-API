@@ -1,6 +1,8 @@
 import axios from 'axios';
+import { useRef, useEffect, useState } from 'react';
 
 export default function Table({ input, setInput, results, setResults, loading, setLoading }) {
+    const [currentPage, setcurrentPage] = useState("1");
 
     const displayData = results.map((result, key) => {
         return (
@@ -19,6 +21,32 @@ export default function Table({ input, setInput, results, setResults, loading, s
         e.preventDefault();
         setLoading(true);
         const buttonPressed = e.target.innerText;
+        switch (buttonPressed) {
+            case Number(buttonPressed) < 1 || buttonPressed === "null":
+                setcurrentPage(buttonPressed = "1");
+            case Number(buttonPressed) > 9 || buttonPressed === "null":
+                setcurrentPage(buttonPressed = "8")
+            case "Previous":
+                setcurrentPage(currentPage.toString(Number(currentPage)) - 1);
+            case "Next":
+                setcurrentPage(currentPage.toString(Number(currentPage)) + 1);
+            default:
+                setcurrentPage(buttonPressed);
+        }
+        // if (buttonPressed = "previous"){
+        //     setcurrentPage(buttonPressed - 1)   
+        // }
+        // if (buttonPressed = "next"){
+        //     setcurrentPage(buttonPressed + 1)
+        // }
+        // if (buttonPressed < 0){
+        //     setcurrentPage(buttonPressed = 0)
+        // }
+        // if (buttonPressed > 9){
+        //     setcurrentPage(buttonPressed = 8)
+        // }else {
+        //     setcurrentPage(buttonPressed);
+        // }
         const informationToGet = "https://swapi.dev/api/people/?page="
         const pagePointer = await axios.get(informationToGet + buttonPressed);
         for (let i = 0; i < pagePointer.data.results.length; i++) {

@@ -78,9 +78,9 @@ export default function StarWars() {
     const spinnerAndTable = () => {
         if (loading) {
             return (
-                <div>
-                    <div className="spinner-border text-primary mt-3" role="status"></div>
-                    <div>Loading....</div>
+                <div className='text-center'>
+                    <div className="spinner-border text-white mt-3" role="status"></div>
+                    <div className="text-white">Loading....</div>
                 </div>
             )
         }
