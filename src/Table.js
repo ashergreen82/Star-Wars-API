@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { useRef, useEffect, useState } from 'react';
 
-export default function Table({ input, setInput, results, setResults, loading, setLoading, currentPage }) {
+export default function Table({ input, setInput, results, setResults, loading, setLoading, currentPage, previousPage, setPreviousPage, nextPage, setNextPage }) {
     // const [currentPage, setcurrentPage] = useState("1");
     // let currentPage = "1"
 
@@ -23,6 +23,7 @@ export default function Table({ input, setInput, results, setResults, loading, s
         setLoading(true);
         const buttonPressed = e.target.innerText;
         let tempValue = 0
+        let informationToGet = ""
         switch (buttonPressed) {
             // case Number(buttonPressed) < 1 || buttonPressed === "null":
             //     setcurrentPage("1");
@@ -30,27 +31,38 @@ export default function Table({ input, setInput, results, setResults, loading, s
             //     setcurrentPage("8")
             case "Previous":
                 // setcurrentPage(currentPage.toString(Number(currentPage)) - 1);
-                tempValue = Number(currentPage) - 1;
-                if (tempValue < 1) {
-                    tempValue = 1;
-                }
+                // tempValue = Number(currentPage) - 1;
+                // if (tempValue < 1) {
+                //     tempValue = 1;
+                // }
                 // tempValue.toString();
                 // setcurrentPage(tempValue);
-                currentPage = String(tempValue);
+                // currentPage = String(tempValue);
+                if (previousPage === "null") {
+                    informationToGet = "https://swapi.dev/api/people/?page="
+                } else {
+                    informationToGet = previousPage
+                }
                 break;
             case "Next":
                 // setcurrentPage(currentPage.toString(Number(currentPage)) + 1);
-                tempValue = Number(currentPage) + 1;
-                if (tempValue > 9) {
-                    tempValue = 9;
-                }
+                // tempValue = Number(currentPage) + 1;
+                // if (tempValue > 9) {
+                //     tempValue = 9;
+                // }
                 // tempValue.toString();
                 // setcurrentPage(tempValue);
-                currentPage = String(tempValue)
+                // currentPage = String(tempValue)
+                if (nextPage === "null") {
+                    informationToGet = "https://swapi.dev/api/people/?page="
+                } else {
+                    informationToGet = nextPage
+                }
                 break;
             default:
                 // setcurrentPage(buttonPressed);
-                currentPage = buttonPressed;
+                // currentPage = buttonPressed;
+                informationToGet = "https://swapi.dev/api/people/?page=" + buttonPressed;
         }
         // if (buttonPressed = "previous"){
         //     setcurrentPage(buttonPressed - 1)   
@@ -66,8 +78,9 @@ export default function Table({ input, setInput, results, setResults, loading, s
         // }else {
         //     setcurrentPage(buttonPressed);
         // }
-        const informationToGet = "https://swapi.dev/api/people/?page="
-        const pagePointer = await axios.get(informationToGet + currentPage);
+        // const informationToGet = "https://swapi.dev/api/people/?page="
+        // const pagePointer = await axios.get(informationToGet + currentPage);
+        const pagePointer = await axios.get(informationToGet);
         for (let i = 0; i < pagePointer.data.results.length; i++) {
             // results[i]
             const planetLocation = pagePointer.data.results[i].homeworld;
@@ -88,6 +101,8 @@ export default function Table({ input, setInput, results, setResults, loading, s
         console.log("Page: ", { pagePointer });
         console.log("Page: ", pagePointer.data.results[0]);
         setResults(pagePointer.data.results);
+        setNextPage(nextPage);
+        setPreviousPage(previousPage);
         setLoading(false);
     }
 

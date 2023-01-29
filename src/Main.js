@@ -11,6 +11,8 @@ export default function StarWars() {
     const [input, setInput] = useState("");
     const [results, setResults] = useState([]);
     const [loading, setLoading] = useState(false);
+    let [nextPage, setNextPage] = useState("2");
+    let [previousPage, setPreviousPage] = useState("null");
     let currentPage = "1"
 
     function handleChange(e) {
@@ -26,6 +28,8 @@ export default function StarWars() {
         // const informationToGet = "https://swapi.dev/api/people/?search="
         // results = getInformation(informationToGet);
         const response = await axios.get(informationToGet);
+        previousPage = response.data.previous;
+        nextPage = response.data.next;
         for (let i = 0; i < response.data.results.length; i++) {
             const planetLocation = response.data.results[i].homeworld;
             const speciesLocation = response.data.results[i].species;
@@ -37,6 +41,8 @@ export default function StarWars() {
         }
 
         setResults(response.data.results);
+        setNextPage(nextPage);
+        setPreviousPage(previousPage);
         setLoading(false);
     }
 
@@ -47,6 +53,10 @@ export default function StarWars() {
             const informationToGet = "https://swapi.dev/api/people/?search="
             // results = getInformation(informationToGet);
             const response = await axios.get(informationToGet);
+            previousPage = response.data.previous;
+            nextPage = response.data.next;
+            console.log("This is the next page: ", nextPage);
+            console.log("This is the previous page: ", previousPage);
             for (let i = 0; i < response.data.results.length; i++) {
                 // results[i]
                 const planetLocation = response.data.results[i].homeworld;
@@ -58,7 +68,9 @@ export default function StarWars() {
                 else response.data.results[i].species = "Human";
             }
             setResults(response.data.results);
-            setLoading(false)
+            setNextPage(nextPage);
+            setPreviousPage(previousPage);
+            setLoading(false);
         }
         initialStart();
     }, [])
@@ -94,6 +106,10 @@ export default function StarWars() {
                 loading={loading}
                 setLoading={setLoading}
                 currentPage={currentPage}
+                nextPage={nextPage}
+                setNextPage={setNextPage}
+                previousPage={previousPage}
+                setPreviousPage={setPreviousPage}
             />
         )
     }
