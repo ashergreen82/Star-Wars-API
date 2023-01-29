@@ -39,7 +39,7 @@ export default function Table({ input, setInput, results, setResults, loading, s
                 // setcurrentPage(tempValue);
                 // currentPage = String(tempValue);
                 if (previousPage === "null") {
-                    informationToGet = "https://swapi.dev/api/people/?page="
+                    informationToGet = "https://swapi.dev/api/people/?page=9"
                 } else {
                     informationToGet = previousPage
                 }
@@ -54,7 +54,7 @@ export default function Table({ input, setInput, results, setResults, loading, s
                 // setcurrentPage(tempValue);
                 // currentPage = String(tempValue)
                 if (nextPage === "null") {
-                    informationToGet = "https://swapi.dev/api/people/?page="
+                    informationToGet = "https://swapi.dev/api/people/?page=1"
                 } else {
                     informationToGet = nextPage
                 }
@@ -93,7 +93,7 @@ export default function Table({ input, setInput, results, setResults, loading, s
         }
         console.log("pageNavigation has executed");
         console.log("This is the value of e: ", { e });
-        console.log("this is the vlaue of e as not an object: ", e)
+        console.log("this is the value of e as not an object: ", e)
         console.log(e.target.href, "was pressed");
         console.log(e.target.innerText, "was pressed");
         console.log("Page: ", pagePointer);
