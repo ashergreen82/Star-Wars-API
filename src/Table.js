@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { useRef, useEffect, useState } from 'react';
 
-export default function Table({ input, setInput, results, setResults, loading, setLoading, currentPage, previousPage, setPreviousPage, nextPage, setNextPage }) {
+export default function Table({ input, setInput, results, setResults, loading, setLoading, currentPage, previousPage, setPreviousPage, nextPage, setNextPage, setUrl, Url, setPageCount, pageCount }) {
     // const [currentPage, setcurrentPage] = useState("1");
     // let currentPage = "1"
 
@@ -18,10 +18,22 @@ export default function Table({ input, setInput, results, setResults, loading, s
         )
     });
 
+
+    const getPrevPage = (e) => {
+        e.preventDefault();
+        setUrl(previousPage);
+    }
+
+    const getNextPage = (e) => {
+        e.preventDefault();
+        setUrl(nextPage);
+    }
+
     async function pageNavigation(e) {
         e.preventDefault();
         setLoading(true);
         const buttonPressed = e.target.innerText;
+        // `https://swapi/dev/api/people/?search=${input}&page=${buttonPressed}`
         let tempValue = 0
         let informationToGet = ""
         switch (buttonPressed) {
@@ -91,22 +103,26 @@ export default function Table({ input, setInput, results, setResults, loading, s
             if (speciesLocation.length) pagePointer.data.results[i].species = species.data.name;
             else pagePointer.data.results[i].species = "Human";
         }
-        console.log("pageNavigation has executed");
-        console.log("This is the value of e: ", { e });
-        console.log("this is the value of e as not an object: ", e)
-        console.log(e.target.href, "was pressed");
-        console.log(e.target.innerText, "was pressed");
-        console.log("Page: ", pagePointer);
-        console.log("Page: ", pagePointer.data);
-        console.log("Page: ", { pagePointer });
-        console.log("Page: ", pagePointer.data.results[0]);
+        // console.log("pageNavigation has executed");
+        // console.log("This is the value of e: ", { e });
+        // console.log("this is the value of e as not an object: ", e)
+        // console.log(e.target.href, "was pressed");
+        // console.log(e.target.innerText, "was pressed");
+        // console.log("Page: ", pagePointer);
+        // console.log("Page: ", pagePointer.data);
+        // console.log("Page: ", { pagePointer });
+        // console.log("Page: ", pagePointer.data.results[0]);
         setResults(pagePointer.data.results);
         setNextPage(nextPage);
         setPreviousPage(previousPage);
         setLoading(false);
     }
-
-    console.log("Table Results: ", results)
+    async function pageNavigationButtons() {
+        currentPage = Math.ceil(pageCount / 10)
+        console.log("Number of buttons needed: ", currentPage)
+        console.log("Page count is: ", pageCount)
+        console.log("Table Results: ", results)
+    }
     return (
         <>
             <table className="table table-bordered table-striped table-primary mt-3">
@@ -126,19 +142,29 @@ export default function Table({ input, setInput, results, setResults, loading, s
             </table>
             <nav aria-label="Page navigation">
                 <ul className="pagination justify-content-md-center mt-3">
-                    <li className="page-item"><a className="page-link" href="previous" onClick={pageNavigation}>Previous</a></li>
-                    <li className="page-item"><a className="page-link" href="1" onClick={pageNavigation}>1</a></li>
-                    <li className="page-item"><a className="page-link" href="2" onClick={pageNavigation}>2</a></li>
-                    <li className="page-item"><a className="page-link" href="3" onClick={pageNavigation}>3</a></li>
-                    <li className="page-item"><a className="page-link" href="4" onClick={pageNavigation}>4</a></li>
-                    <li className="page-item"><a className="page-link" href="5" onClick={pageNavigation}>5</a></li>
-                    <li className="page-item"><a className="page-link" href="6" onClick={pageNavigation}>6</a></li>
-                    <li className="page-item"><a className="page-link" href="7" onClick={pageNavigation}>7</a></li>
-                    <li className="page-item"><a className="page-link" href="8" onClick={pageNavigation}>8</a></li>
-                    <li className="page-item"><a className="page-link" href="9" onClick={pageNavigation}>9</a></li>
-                    <li className="page-item"><a className="page-link" href="next" onClick={pageNavigation}>Next</a></li>
+                    {currentPage = Math.ceil(pageCount / 10)}
+                    {console.log("Number of buttons needed: ", currentPage)}
+                    {console.log("Page count is: ", pageCount)}
+                    {console.log("Table Results: ", results)}
+                    <li className="page-item"><a className="page-link" onClick={getNextPage}>Next</a></li>
                 </ul>
             </nav>
         </>
     )
 }
+
+{/* <nav aria-label="Page navigation">
+<ul className="pagination justify-content-md-center mt-3">
+    <li className="page-item"><a className="page-link" onClick={getPrevPage}>Previous</a></li>
+    <li className="page-item"><a className="page-link" href="1" onClick={pageNavigation}>1</a></li>
+    <li className="page-item"><a className="page-link" href="2" onClick={pageNavigation}>2</a></li>
+    <li className="page-item"><a className="page-link" href="3" onClick={pageNavigation}>3</a></li>
+    <li className="page-item"><a className="page-link" href="4" onClick={pageNavigation}>4</a></li>
+    <li className="page-item"><a className="page-link" href="5" onClick={pageNavigation}>5</a></li>
+    <li className="page-item"><a className="page-link" href="6" onClick={pageNavigation}>6</a></li>
+    <li className="page-item"><a className="page-link" href="7" onClick={pageNavigation}>7</a></li>
+    <li className="page-item"><a className="page-link" href="8" onClick={pageNavigation}>8</a></li>
+    <li className="page-item"><a className="page-link" href="9" onClick={pageNavigation}>9</a></li>
+    <li className="page-item"><a className="page-link" onClick={getNextPage}>Next</a></li>
+</ul>
+</nav> */}

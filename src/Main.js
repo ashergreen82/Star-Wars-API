@@ -9,42 +9,46 @@ const swapi = "https://swapi.dev/api/"
 
 export default function StarWars() {
     const [input, setInput] = useState("");
+    const [url, setUrl] = useState("https://swapi.dev/api/people/?search=");
     const [results, setResults] = useState([]);
     const [loading, setLoading] = useState(false);
-    let [nextPage, setNextPage] = useState("2");
-    let [previousPage, setPreviousPage] = useState("null");
-    let currentPage = "1"
+    const [nextPage, setNextPage] = useState("");
+    const [previousPage, setPreviousPage] = useState("");
+    const [pageCount, setPageCount] = useState(0);
+    const currentPage = "1";
 
     function handleChange(e) {
         e.preventDefault();
         setInput(e.target.value);
     }
 
-    async function executeSearch(e) {
+    function handleSubmit(e) {
         e.preventDefault();
-        setLoading(true);
-        // To search for something on SWAPI: https://swapi.dev/api/people/?search=r2
-        const informationToGet = "https://swapi.dev/api/people/?search=" + input
-        // const informationToGet = "https://swapi.dev/api/people/?search="
-        // results = getInformation(informationToGet);
-        const response = await axios.get(informationToGet);
-        previousPage = response.data.previous;
-        nextPage = response.data.next;
-        for (let i = 0; i < response.data.results.length; i++) {
-            const planetLocation = response.data.results[i].homeworld;
-            const speciesLocation = response.data.results[i].species;
-            const planet = await axios.get(planetLocation);
-            const species = await axios.get(speciesLocation);
-            response.data.results[i].homeworld = planet.data.name;
-            if (speciesLocation.length) response.data.results[i].species = species.data.name;
-            else response.data.results[i].species = "Human";
-        }
-
-        setResults(response.data.results);
-        setNextPage(nextPage);
-        setPreviousPage(previousPage);
-        setLoading(false);
+        setUrl(`https://swapi.dev/api/people/?search=${input}`)
     }
+    // async function executeSearch(e) {
+    //     e.preventDefault();
+    //     setLoading(true);
+    //     // To search for something on SWAPI: https://swapi.dev/api/people/?search=r2
+    //     const informationToGet = "https://swapi.dev/api/people/?search=" + input
+    //     // const informationToGet = "https://swapi.dev/api/people/?search="
+    //     // results = getInformation(informationToGet);
+    //     const response = await axios.get(informationToGet);
+    //     setPreviousPage(response.data.previous);
+    //     setNextPage(response.data.next);
+    //     for (let i = 0; i < response.data.results.length; i++) {
+    //         const planetLocation = response.data.results[i].homeworld;
+    //         const speciesLocation = response.data.results[i].species;
+    //         const planet = await axios.get(planetLocation);
+    //         const species = await axios.get(speciesLocation);
+    //         response.data.results[i].homeworld = planet.data.name;
+    //         if (speciesLocation.length) response.data.results[i].species = species.data.name;
+    //         else response.data.results[i].species = "Human";
+    //     }
+
+    //     setResults(response.data.results);
+    //     setLoading(false);
+    // }
 
     useEffect(() => {
         async function initialStart() {
@@ -52,9 +56,9 @@ export default function StarWars() {
             setLoading(true);
             const informationToGet = "https://swapi.dev/api/people/?search="
             // results = getInformation(informationToGet);
-            const response = await axios.get(informationToGet);
-            previousPage = response.data.previous;
-            nextPage = response.data.next;
+            const response = await axios.get(url);
+            setPreviousPage(response.data.previous);
+            setNextPage(response.data.next);
             console.log("This is the next page: ", nextPage);
             console.log("This is the previous page: ", previousPage);
             for (let i = 0; i < response.data.results.length; i++) {
@@ -68,12 +72,13 @@ export default function StarWars() {
                 else response.data.results[i].species = "Human";
             }
             setResults(response.data.results);
-            setNextPage(nextPage);
-            setPreviousPage(previousPage);
             setLoading(false);
+            setPageCount(response.data.count);
+            console.log("Pagecount: ", pageCount);
+            console.log("response: ", response);
         }
         initialStart();
-    }, [])
+    }, [url])
 
     // async function getPlanetAndSpecies() {
     //     for (let i = 0; i < response.data.results.length; i++) {
@@ -110,6 +115,10 @@ export default function StarWars() {
                 setNextPage={setNextPage}
                 previousPage={previousPage}
                 setPreviousPage={setPreviousPage}
+                url={url}
+                setUrl={setUrl}
+                setPageCount={setPageCount}
+                pageCount={pageCount}
             />
         )
     }
@@ -133,7 +142,7 @@ export default function StarWars() {
                     />
                 </div>
                 <div className="text-center">
-                    <button type="button" className="btn btn-primary mt-3 justify-content-md-center" onClick={executeSearch}>Search</button>
+                    <button type="button" className="btn btn-primary mt-3 justify-content-md-center" onClick={handleSubmit}>Search</button>
                 </div>
                 {spinnerAndTable()}
             </div>
