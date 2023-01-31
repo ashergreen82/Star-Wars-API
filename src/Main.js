@@ -59,8 +59,8 @@ export default function StarWars() {
             const response = await axios.get(url);
             setPreviousPage(response.data.previous);
             setNextPage(response.data.next);
-            console.log("This is the next page: ", nextPage);
-            console.log("This is the previous page: ", previousPage);
+            console.log("This is the next page (Main.js): ", nextPage);
+            console.log("This is the previous page (Main.js): ", previousPage);
             for (let i = 0; i < response.data.results.length; i++) {
                 // results[i]
                 const planetLocation = response.data.results[i].homeworld;
@@ -73,7 +73,7 @@ export default function StarWars() {
             }
             setResults(response.data.results);
             setLoading(false);
-            setPageCount(response.data.count);
+            setPageCount(Math.ceil(response.data.count / 10));
             console.log("Pagecount: ", pageCount);
             console.log("response: ", response);
         }
