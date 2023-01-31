@@ -4,6 +4,8 @@ import { useRef, useEffect, useState } from 'react';
 export default function Table({ input, setInput, results, setResults, loading, setLoading, currentPage, previousPage, setPreviousPage, nextPage, setNextPage, setUrl, Url, setPageCount, pageCount }) {
     // const [currentPage, setcurrentPage] = useState("1");
     // let currentPage = "1"
+    const [displayPreviousButton, setdisplayPreviousButton] = useState(true);
+    const [displayNextButton, setdisplayNextButton] = useState(true);
 
     const displayData = results.map((result, key) => {
         return (
@@ -21,11 +23,22 @@ export default function Table({ input, setInput, results, setResults, loading, s
 
     const getPrevPage = (e) => {
         e.preventDefault();
+        // if (!previousPage) return;
+        if (!previousPage) {
+            setdisplayPreviousButton(false);
+            return;
+        }
         setUrl(previousPage);
     }
 
     const getNextPage = (e) => {
         e.preventDefault();
+        // if (!nextPage) return;
+        if (!nextPage) {
+            setdisplayNextButton(false);
+            return;
+        }
+
         setUrl(nextPage);
     }
 
@@ -123,6 +136,9 @@ export default function Table({ input, setInput, results, setResults, loading, s
         console.log("Page count is: ", pageCount)
         console.log("Table Results: ", results)
     }
+
+    const buttonsArray = data.map((d) => <li className="page-item"><a className="page-link" href="1" onClick={pageNavigation}>1</a></li>)
+
     return (
         <>
             <table className="table table-bordered table-striped table-primary mt-3">
@@ -142,10 +158,14 @@ export default function Table({ input, setInput, results, setResults, loading, s
             </table>
             <nav aria-label="Page navigation">
                 <ul className="pagination justify-content-md-center mt-3">
-                    {currentPage = Math.ceil(pageCount / 10)}
+                    {/* {currentPage = Math.ceil(pageCount / 10)} */}
                     {console.log("Number of buttons needed: ", currentPage)}
                     {console.log("Page count is: ", pageCount)}
                     {console.log("Table Results: ", results)}
+                    {console.log("This is the next page: ", nextPage)};
+                    {console.log("This is the previous page: ", previousPage)};
+                    <li className="page-item"><a className="page-link" onClick={getPrevPage}>Previous</a></li>
+                    {/* {buttonsArray} */}
                     <li className="page-item"><a className="page-link" onClick={getNextPage}>Next</a></li>
                 </ul>
             </nav>
