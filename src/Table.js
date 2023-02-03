@@ -1,9 +1,9 @@
 import axios from 'axios';
 import { useRef, useEffect, useState } from 'react';
 
-export default function Table({ input, setInput, results, setResults, loading, setLoading, currentPage, previousPage, setPreviousPage, nextPage, setNextPage, setUrl, Url, setPageCount, pageCount }) {
-    // const [currentPage, setcurrentPage] = useState("1");
-    // let currentPage = "1"
+export default function Table({ input, setInput, results, setResults, loading, setLoading, numberOfButtonsNeeded, previousPage, setPreviousPage, nextPage, setNextPage, setUrl, Url, setPageCount, pageCount }) {
+    // const [numberOfButtonsNeeded, setnumberOfButtonsNeeded] = useState("1");
+    // let numberOfButtonsNeeded = "1"
     const [displayPreviousButton, setdisplayPreviousButton] = useState(true);
     const [displayNextButton, setdisplayNextButton] = useState(true);
 
@@ -38,7 +38,6 @@ export default function Table({ input, setInput, results, setResults, loading, s
             setdisplayNextButton(false);
             return;
         }
-
         setUrl(nextPage);
     }
 
@@ -51,18 +50,18 @@ export default function Table({ input, setInput, results, setResults, loading, s
         let informationToGet = ""
         switch (buttonPressed) {
             // case Number(buttonPressed) < 1 || buttonPressed === "null":
-            //     setcurrentPage("1");
+            //     setnumberOfButtonsNeeded("1");
             // case Number(buttonPressed) > 9 || buttonPressed === "null":
-            //     setcurrentPage("8")
+            //     setnumberOfButtonsNeeded("8")
             case "Previous":
-                // setcurrentPage(currentPage.toString(Number(currentPage)) - 1);
-                // tempValue = Number(currentPage) - 1;
+                // setnumberOfButtonsNeeded(numberOfButtonsNeeded.toString(Number(numberOfButtonsNeeded)) - 1);
+                // tempValue = Number(numberOfButtonsNeeded) - 1;
                 // if (tempValue < 1) {
                 //     tempValue = 1;
                 // }
                 // tempValue.toString();
-                // setcurrentPage(tempValue);
-                // currentPage = String(tempValue);
+                // setnumberOfButtonsNeeded(tempValue);
+                // numberOfButtonsNeeded = String(tempValue);
                 if (previousPage === "null") {
                     informationToGet = "https://swapi.dev/api/people/?page=9"
                 } else {
@@ -70,14 +69,14 @@ export default function Table({ input, setInput, results, setResults, loading, s
                 }
                 break;
             case "Next":
-                // setcurrentPage(currentPage.toString(Number(currentPage)) + 1);
-                // tempValue = Number(currentPage) + 1;
+                // setnumberOfButtonsNeeded(numberOfButtonsNeeded.toString(Number(numberOfButtonsNeeded)) + 1);
+                // tempValue = Number(numberOfButtonsNeeded) + 1;
                 // if (tempValue > 9) {
                 //     tempValue = 9;
                 // }
                 // tempValue.toString();
-                // setcurrentPage(tempValue);
-                // currentPage = String(tempValue)
+                // setnumberOfButtonsNeeded(tempValue);
+                // numberOfButtonsNeeded = String(tempValue)
                 if (nextPage === "null") {
                     informationToGet = "https://swapi.dev/api/people/?page=1"
                 } else {
@@ -85,26 +84,26 @@ export default function Table({ input, setInput, results, setResults, loading, s
                 }
                 break;
             default:
-                // setcurrentPage(buttonPressed);
-                // currentPage = buttonPressed;
+                // setnumberOfButtonsNeeded(buttonPressed);
+                // numberOfButtonsNeeded = buttonPressed;
                 informationToGet = "https://swapi.dev/api/people/?page=" + buttonPressed;
         }
         // if (buttonPressed = "previous"){
-        //     setcurrentPage(buttonPressed - 1)   
+        //     setnumberOfButtonsNeeded(buttonPressed - 1)   
         // }
         // if (buttonPressed = "next"){
-        //     setcurrentPage(buttonPressed + 1)
+        //     setnumberOfButtonsNeeded(buttonPressed + 1)
         // }
         // if (buttonPressed < 0){
-        //     setcurrentPage(buttonPressed = 0)
+        //     setnumberOfButtonsNeeded(buttonPressed = 0)
         // }
         // if (buttonPressed > 9){
-        //     setcurrentPage(buttonPressed = 8)
+        //     setnumberOfButtonsNeeded(buttonPressed = 8)
         // }else {
-        //     setcurrentPage(buttonPressed);
+        //     setnumberOfButtonsNeeded(buttonPressed);
         // }
         // const informationToGet = "https://swapi.dev/api/people/?page="
-        // const pagePointer = await axios.get(informationToGet + currentPage);
+        // const pagePointer = await axios.get(informationToGet + numberOfButtonsNeeded);
         const pagePointer = await axios.get(informationToGet);
         for (let i = 0; i < pagePointer.data.results.length; i++) {
             // results[i]
@@ -131,13 +130,27 @@ export default function Table({ input, setInput, results, setResults, loading, s
         setLoading(false);
     }
     async function pageNavigationButtons() {
-        currentPage = Math.ceil(pageCount / 10)
-        console.log("Number of buttons needed: ", currentPage)
+        numberOfButtonsNeeded = Math.ceil(pageCount / 10)
+        console.log("Number of buttons needed: ", numberOfButtonsNeeded)
         console.log("Page count is: ", pageCount)
         console.log("Table Results: ", results)
     }
 
-    const buttonsArray = data.map((d) => <li className="page-item"><a className="page-link" href="1" onClick={pageNavigation}>1</a></li>)
+    // const buttonsArray = numberOfButtonsNeeded.map((d) => <li className="page-item"><a className="page-link" href="1" onClick={pageNavigation}>1</a></li>)
+    function buttonsArray() {
+        console.log("buttonsArray has executed")
+        let buttonList = [];
+        for (let i = 0; i < pageCount; i++) {
+            buttonList.push(
+                <li key={i} className="page-item">
+                    <a className="page-link" href="#" onClick={() => pageNavigation(i)}>
+                        {i}
+                    </a>
+                </li>
+            );
+        }
+        return buttonList;
+    }
 
     return (
         <>
@@ -158,14 +171,14 @@ export default function Table({ input, setInput, results, setResults, loading, s
             </table>
             <nav aria-label="Page navigation">
                 <ul className="pagination justify-content-md-center mt-3">
-                    {/* {currentPage = Math.ceil(pageCount / 10)} */}
-                    {console.log("Number of buttons needed: ", currentPage)}
+                    {/* {numberOfButtonsNeeded = Math.ceil(pageCount / 10)} */}
+                    {console.log("Number of buttons needed: ", numberOfButtonsNeeded)}
                     {console.log("Page count is: ", pageCount)}
                     {console.log("Table Results: ", results)}
                     {console.log("This is the next page: ", nextPage)};
                     {console.log("This is the previous page: ", previousPage)};
                     <li className="page-item"><a className="page-link" onClick={getPrevPage}>Previous</a></li>
-                    {/* {buttonsArray} */}
+                    {buttonsArray()}
                     <li className="page-item"><a className="page-link" onClick={getNextPage}>Next</a></li>
                 </ul>
             </nav>

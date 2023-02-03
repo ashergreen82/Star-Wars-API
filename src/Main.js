@@ -15,7 +15,7 @@ export default function StarWars() {
     const [nextPage, setNextPage] = useState("");
     const [previousPage, setPreviousPage] = useState("");
     const [pageCount, setPageCount] = useState(0);
-    const currentPage = "1";
+    const numberOfButtonsNeeded = "1";
 
     function handleChange(e) {
         e.preventDefault();
@@ -110,7 +110,7 @@ export default function StarWars() {
                 setResults={setResults}
                 loading={loading}
                 setLoading={setLoading}
-                currentPage={currentPage}
+                numberOfButtonsNeeded={numberOfButtonsNeeded}
                 nextPage={nextPage}
                 setNextPage={setNextPage}
                 previousPage={previousPage}
