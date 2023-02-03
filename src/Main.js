@@ -16,6 +16,8 @@ export default function StarWars() {
     const [previousPage, setPreviousPage] = useState("");
     const [pageCount, setPageCount] = useState(0);
     const [isSearchData, setIsSearchData] = useState(false);
+    const [displayPreviousButton, setdisplayPreviousButton] = useState(false);
+    const [displayNextButton, setdisplayNextButton] = useState(true);
     const numberOfButtonsNeeded = "1";
 
     function handleChange(e) {
@@ -28,29 +30,6 @@ export default function StarWars() {
         setUrl(`https://swapi.dev/api/people/?search=${input}`);
         setIsSearchData(true);
     }
-    // async function executeSearch(e) {
-    //     e.preventDefault();
-    //     setLoading(true);
-    //     // To search for something on SWAPI: https://swapi.dev/api/people/?search=r2
-    //     const informationToGet = "https://swapi.dev/api/people/?search=" + input
-    //     // const informationToGet = "https://swapi.dev/api/people/?search="
-    //     // results = getInformation(informationToGet);
-    //     const response = await axios.get(informationToGet);
-    //     setPreviousPage(response.data.previous);
-    //     setNextPage(response.data.next);
-    //     for (let i = 0; i < response.data.results.length; i++) {
-    //         const planetLocation = response.data.results[i].homeworld;
-    //         const speciesLocation = response.data.results[i].species;
-    //         const planet = await axios.get(planetLocation);
-    //         const species = await axios.get(speciesLocation);
-    //         response.data.results[i].homeworld = planet.data.name;
-    //         if (speciesLocation.length) response.data.results[i].species = species.data.name;
-    //         else response.data.results[i].species = "Human";
-    //     }
-
-    //     setResults(response.data.results);
-    //     setLoading(false);
-    // }
 
     useEffect(() => {
         async function initialStart() {
@@ -75,25 +54,12 @@ export default function StarWars() {
             }
             setResults(response.data.results);
             setLoading(false);
-            setPageCount(Math.ceil(response.data.count / 10));
+            setPageCount(Math.ceil((response.data.count / 10)) + 1);
             console.log("Pagecount: ", pageCount);
             console.log("response: ", response);
         }
         initialStart();
     }, [url])
-
-    // async function getPlanetAndSpecies() {
-    //     for (let i = 0; i < response.data.results.length; i++) {
-    //         // results[i]
-    //         const planetLocation = response.data.results[i].homeworld;
-    //         const speciesLocation = response.data.results[i].species;
-    //         const planet = await axios.get(planetLocation);
-    //         const species = await axios.get(speciesLocation);
-    //         response.data.results[i].homeworld = planet.data.name;
-    //         if (speciesLocation.length) response.data.results[i].species = species.data.name;
-    //         else response.data.results[i].species = "Human";
-    //     }
-    // }
 
     const spinnerAndTable = () => {
         if (loading) {
@@ -123,6 +89,10 @@ export default function StarWars() {
                 pageCount={pageCount}
                 isSearchData={isSearchData}
                 setIsSearchData={setIsSearchData}
+                displayPreviousButton={displayPreviousButton}
+                setdisplayPreviousButton={setdisplayPreviousButton}
+                displayNextButton={displayNextButton}
+                setdisplayNextButton={setdisplayNextButton}
             />
         )
     }
