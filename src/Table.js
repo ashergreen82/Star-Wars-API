@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { useRef, useEffect, useState } from 'react';
 
-export default function Table({ input, setInput, results, setResults, loading, setLoading, numberOfButtonsNeeded, previousPage, setPreviousPage, nextPage, setNextPage, setUrl, Url, setPageCount, pageCount }) {
+export default function Table({ input, setInput, results, setResults, loading, setLoading, numberOfButtonsNeeded, previousPage, setPreviousPage, nextPage, setNextPage, setUrl, Url, setPageCount, pageCount, isSearchData, setIsSearchData }) {
     // const [numberOfButtonsNeeded, setnumberOfButtonsNeeded] = useState("1");
     // let numberOfButtonsNeeded = "1"
     const [displayPreviousButton, setdisplayPreviousButton] = useState(true);
@@ -48,87 +48,55 @@ export default function Table({ input, setInput, results, setResults, loading, s
         // `https://swapi/dev/api/people/?search=${input}&page=${buttonPressed}`
         let tempValue = 0
         let informationToGet = ""
-        switch (buttonPressed) {
-            // case Number(buttonPressed) < 1 || buttonPressed === "null":
-            //     setnumberOfButtonsNeeded("1");
-            // case Number(buttonPressed) > 9 || buttonPressed === "null":
-            //     setnumberOfButtonsNeeded("8")
-            case "Previous":
-                // setnumberOfButtonsNeeded(numberOfButtonsNeeded.toString(Number(numberOfButtonsNeeded)) - 1);
-                // tempValue = Number(numberOfButtonsNeeded) - 1;
-                // if (tempValue < 1) {
-                //     tempValue = 1;
-                // }
-                // tempValue.toString();
-                // setnumberOfButtonsNeeded(tempValue);
-                // numberOfButtonsNeeded = String(tempValue);
-                if (previousPage === "null") {
-                    informationToGet = "https://swapi.dev/api/people/?page=9"
-                } else {
-                    informationToGet = previousPage
-                }
-                break;
-            case "Next":
-                // setnumberOfButtonsNeeded(numberOfButtonsNeeded.toString(Number(numberOfButtonsNeeded)) + 1);
-                // tempValue = Number(numberOfButtonsNeeded) + 1;
-                // if (tempValue > 9) {
-                //     tempValue = 9;
-                // }
-                // tempValue.toString();
-                // setnumberOfButtonsNeeded(tempValue);
-                // numberOfButtonsNeeded = String(tempValue)
-                if (nextPage === "null") {
-                    informationToGet = "https://swapi.dev/api/people/?page=1"
-                } else {
-                    informationToGet = nextPage
-                }
-                break;
-            default:
-                // setnumberOfButtonsNeeded(buttonPressed);
-                // numberOfButtonsNeeded = buttonPressed;
-                informationToGet = "https://swapi.dev/api/people/?page=" + buttonPressed;
+        debugger;
+        if (isSearchData == true) {
+            informationToGet = "https://swapi.dev/api/people/?search=" + input + "&page=" + buttonPressed;
+        } else {
+            informationToGet = "https://swapi.dev/api/people/?page=" + buttonPressed;
         }
-        // if (buttonPressed = "previous"){
-        //     setnumberOfButtonsNeeded(buttonPressed - 1)   
-        // }
-        // if (buttonPressed = "next"){
-        //     setnumberOfButtonsNeeded(buttonPressed + 1)
-        // }
-        // if (buttonPressed < 0){
-        //     setnumberOfButtonsNeeded(buttonPressed = 0)
-        // }
-        // if (buttonPressed > 9){
-        //     setnumberOfButtonsNeeded(buttonPressed = 8)
-        // }else {
-        //     setnumberOfButtonsNeeded(buttonPressed);
-        // }
-        // const informationToGet = "https://swapi.dev/api/people/?page="
-        // const pagePointer = await axios.get(informationToGet + numberOfButtonsNeeded);
-        const pagePointer = await axios.get(informationToGet);
-        for (let i = 0; i < pagePointer.data.results.length; i++) {
-            // results[i]
-            const planetLocation = pagePointer.data.results[i].homeworld;
-            const speciesLocation = pagePointer.data.results[i].species;
-            const planet = await axios.get(planetLocation);
-            const species = await axios.get(speciesLocation);
-            pagePointer.data.results[i].homeworld = planet.data.name;
-            if (speciesLocation.length) pagePointer.data.results[i].species = species.data.name;
-            else pagePointer.data.results[i].species = "Human";
-        }
-        // console.log("pageNavigation has executed");
-        // console.log("This is the value of e: ", { e });
-        // console.log("this is the value of e as not an object: ", e)
-        // console.log(e.target.href, "was pressed");
-        // console.log(e.target.innerText, "was pressed");
-        // console.log("Page: ", pagePointer);
-        // console.log("Page: ", pagePointer.data);
-        // console.log("Page: ", { pagePointer });
-        // console.log("Page: ", pagePointer.data.results[0]);
-        setResults(pagePointer.data.results);
-        setNextPage(nextPage);
-        setPreviousPage(previousPage);
-        setLoading(false);
+        setUrl(informationToGet);
     }
+    // if (buttonPressed = "previous"){
+    //     setnumberOfButtonsNeeded(buttonPressed - 1)   
+    // }
+    // if (buttonPressed = "next"){
+    //     setnumberOfButtonsNeeded(buttonPressed + 1)
+    // }
+    // if (buttonPressed < 0){
+    //     setnumberOfButtonsNeeded(buttonPressed = 0)
+    // }
+    // if (buttonPressed > 9){
+    //     setnumberOfButtonsNeeded(buttonPressed = 8)
+    // }else {
+    //     setnumberOfButtonsNeeded(buttonPressed);
+    // }
+    // const informationToGet = "https://swapi.dev/api/people/?page="
+    // const pagePointer = await axios.get(informationToGet + numberOfButtonsNeeded);
+    // const pagePointer = await axios.get(informationToGet);
+    // for (let i = 0; i < pagePointer.data.results.length; i++) {
+    //     // results[i]
+    //     const planetLocation = pagePointer.data.results[i].homeworld;
+    //     const speciesLocation = pagePointer.data.results[i].species;
+    //     const planet = await axios.get(planetLocation);
+    //     const species = await axios.get(speciesLocation);
+    //     pagePointer.data.results[i].homeworld = planet.data.name;
+    //     if (speciesLocation.length) pagePointer.data.results[i].species = species.data.name;
+    //     else pagePointer.data.results[i].species = "Human";
+    // }
+    // console.log("pageNavigation has executed");
+    // console.log("This is the value of e: ", { e });
+    // console.log("this is the value of e as not an object: ", e)
+    // console.log(e.target.href, "was pressed");
+    // console.log(e.target.innerText, "was pressed");
+    // console.log("Page: ", pagePointer);
+    // console.log("Page: ", pagePointer.data);
+    // console.log("Page: ", { pagePointer });
+    // console.log("Page: ", pagePointer.data.results[0]);
+    //     setResults(pagePointer.data.results);
+    //     setNextPage(nextPage);
+    //     setPreviousPage(previousPage);
+    //     setLoading(false);
+    // }
     async function pageNavigationButtons() {
         numberOfButtonsNeeded = Math.ceil(pageCount / 10)
         console.log("Number of buttons needed: ", numberOfButtonsNeeded)
@@ -140,10 +108,10 @@ export default function Table({ input, setInput, results, setResults, loading, s
     function buttonsArray() {
         console.log("buttonsArray has executed")
         let buttonList = [];
-        for (let i = 0; i < pageCount; i++) {
+        for (let i = 1; i < pageCount; i++) {
             buttonList.push(
                 <li key={i} className="page-item">
-                    <a className="page-link" href="#" onClick={() => pageNavigation(i)}>
+                    <a className="page-link" href="#" onClick={(e) => pageNavigation(e)}>
                         {i}
                     </a>
                 </li>

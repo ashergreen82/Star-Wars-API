@@ -15,6 +15,7 @@ export default function StarWars() {
     const [nextPage, setNextPage] = useState("");
     const [previousPage, setPreviousPage] = useState("");
     const [pageCount, setPageCount] = useState(0);
+    const [isSearchData, setIsSearchData] = useState(false);
     const numberOfButtonsNeeded = "1";
 
     function handleChange(e) {
@@ -24,7 +25,8 @@ export default function StarWars() {
 
     function handleSubmit(e) {
         e.preventDefault();
-        setUrl(`https://swapi.dev/api/people/?search=${input}`)
+        setUrl(`https://swapi.dev/api/people/?search=${input}`);
+        setIsSearchData(true);
     }
     // async function executeSearch(e) {
     //     e.preventDefault();
@@ -119,6 +121,8 @@ export default function StarWars() {
                 setUrl={setUrl}
                 setPageCount={setPageCount}
                 pageCount={pageCount}
+                isSearchData={isSearchData}
+                setIsSearchData={setIsSearchData}
             />
         )
     }
