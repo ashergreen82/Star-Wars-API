@@ -80,7 +80,7 @@ export default function StarWars() {
         <>
             <div>
                 <div>
-                    <img id="header_image" src={headerimage}></img>
+                    <img id="header_image" alt="Star Wars API" src={headerimage}></img>
                     {/* <h1>Star Wars API</h1> */}
                 </div>
                 <div className="user-input">
