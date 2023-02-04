@@ -5,7 +5,7 @@
 You can run the program from [here](https://63c2f2489ccdc732de19a7b5--bucolic-froyo-de7845.netlify.app/).
 <br /><br />
 
-![screenshot](/src/images/screenshot.jpgs/)
+![screenshot](/src/images/screenshot.jpg/)
 
 ## **Summary**
 
