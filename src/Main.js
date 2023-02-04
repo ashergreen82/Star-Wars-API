@@ -1,11 +1,8 @@
 import React from 'react'
-import { useRef, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
 import Table from "./Table"
-import background from "./images/background.jpg"
 import headerimage from "./images/Star_Wars_Logo.svg.png"
-
-const swapi = "https://swapi.dev/api/"
 
 export default function StarWars() {
     const [input, setInput] = useState("");
@@ -18,7 +15,6 @@ export default function StarWars() {
     const [isSearchData, setIsSearchData] = useState(false);
     const [displayPreviousButton, setdisplayPreviousButton] = useState(false);
     const [displayNextButton, setdisplayNextButton] = useState(true);
-    const numberOfButtonsNeeded = "1";
 
     function handleChange(e) {
         e.preventDefault();
@@ -33,17 +29,11 @@ export default function StarWars() {
 
     useEffect(() => {
         async function initialStart() {
-            console.log("Initial start sequence has started.")
             setLoading(true);
-            const informationToGet = "https://swapi.dev/api/people/?search="
-            // results = getInformation(informationToGet);
             const response = await axios.get(url);
             setPreviousPage(response.data.previous);
             setNextPage(response.data.next);
-            console.log("This is the next page (Main.js): ", nextPage);
-            console.log("This is the previous page (Main.js): ", previousPage);
             for (let i = 0; i < response.data.results.length; i++) {
-                // results[i]
                 const planetLocation = response.data.results[i].homeworld;
                 const speciesLocation = response.data.results[i].species;
                 const planet = await axios.get(planetLocation);
@@ -55,8 +45,6 @@ export default function StarWars() {
             setResults(response.data.results);
             setLoading(false);
             setPageCount(Math.ceil((response.data.count / 10)) + 1);
-            console.log("Pagecount: ", pageCount);
-            console.log("response: ", response);
         }
         initialStart();
     }, [url])
@@ -73,22 +61,13 @@ export default function StarWars() {
         return (
             <Table
                 input={input}
-                setInput={setInput}
                 results={results}
-                setResults={setResults}
-                loading={loading}
                 setLoading={setLoading}
-                numberOfButtonsNeeded={numberOfButtonsNeeded}
                 nextPage={nextPage}
-                setNextPage={setNextPage}
                 previousPage={previousPage}
-                setPreviousPage={setPreviousPage}
-                url={url}
                 setUrl={setUrl}
-                setPageCount={setPageCount}
                 pageCount={pageCount}
                 isSearchData={isSearchData}
-                setIsSearchData={setIsSearchData}
                 displayPreviousButton={displayPreviousButton}
                 setdisplayPreviousButton={setdisplayPreviousButton}
                 displayNextButton={displayNextButton}

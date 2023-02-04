@@ -1,7 +1,6 @@
-import axios from 'axios';
-import { useRef, useEffect, useState } from 'react';
+// export default function Table({ input, setInput, results, setResults, loading, setLoading, numberOfButtonsNeeded, previousPage, setPreviousPage, nextPage, setNextPage, setUrl, Url, setPageCount, pageCount, isSearchData, setIsSearchData, displayPreviousButton, setdisplayPreviousButton, displayNextButton, setdisplayNextButton }) {
 
-export default function Table({ input, setInput, results, setResults, loading, setLoading, numberOfButtonsNeeded, previousPage, setPreviousPage, nextPage, setNextPage, setUrl, Url, setPageCount, pageCount, isSearchData, setIsSearchData, displayPreviousButton, setdisplayPreviousButton, displayNextButton, setdisplayNextButton }) {
+export default function Table({ input, results, setLoading, previousPage, nextPage, setUrl, pageCount, isSearchData, displayPreviousButton, setdisplayPreviousButton, displayNextButton, setdisplayNextButton }) {
 
     const displayData = results.map((result, key) => {
         return (
@@ -32,9 +31,8 @@ export default function Table({ input, setInput, results, setResults, loading, s
         e.preventDefault();
         setLoading(true);
         const buttonPressed = e.target.innerText;
-        let tempValue = 0
         let informationToGet = ""
-        if (isSearchData == true) {
+        if (isSearchData === true) {
             informationToGet = "https://swapi.dev/api/people/?search=" + input + "&page=" + buttonPressed;
         } else {
             informationToGet = "https://swapi.dev/api/people/?page=" + buttonPressed;
@@ -42,15 +40,7 @@ export default function Table({ input, setInput, results, setResults, loading, s
         setUrl(informationToGet);
     }
 
-    async function pageNavigationButtons() {
-        numberOfButtonsNeeded = Math.ceil(pageCount / 10)
-        console.log("Number of buttons needed: ", numberOfButtonsNeeded)
-        console.log("Page count is: ", pageCount)
-        console.log("Table Results: ", results)
-    }
-
     function buttonsArray() {
-        console.log("buttonsArray has executed")
         let buttonList = [];
         for (let i = 1; i < pageCount; i++) {
             buttonList.push(
@@ -93,12 +83,6 @@ export default function Table({ input, setInput, results, setResults, loading, s
             </table>
             <nav aria-label="Page navigation">
                 <ul className="pagination justify-content-md-center mt-3">
-                    {/* {numberOfButtonsNeeded = Math.ceil(pageCount / 10)} */}
-                    {console.log("Number of buttons needed: ", numberOfButtonsNeeded)}
-                    {console.log("Page count is: ", pageCount)}
-                    {console.log("Table Results: ", results)}
-                    {console.log("This is the next page: ", nextPage)};
-                    {console.log("This is the previous page: ", previousPage)};
                     {displayPreviousButton && (
                         <li className="page-item">
                             <a className="page-link" id="previousBtn" onClick={getPrevPage}>Previous</a>
