@@ -1,5 +1,3 @@
-// export default function Table({ input, setInput, results, setResults, loading, setLoading, numberOfButtonsNeeded, previousPage, setPreviousPage, nextPage, setNextPage, setUrl, Url, setPageCount, pageCount, isSearchData, setIsSearchData, displayPreviousButton, setdisplayPreviousButton, displayNextButton, setdisplayNextButton }) {
-
 export default function Table({ input, results, setLoading, previousPage, nextPage, setUrl, pageCount, isSearchData, displayPreviousButton, setdisplayPreviousButton, displayNextButton, setdisplayNextButton }) {
 
     const displayData = results.map((result, key) => {
@@ -45,7 +43,7 @@ export default function Table({ input, results, setLoading, previousPage, nextPa
         for (let i = 1; i < pageCount; i++) {
             buttonList.push(
                 <li key={i} className="page-item">
-                    <a className="page-link" href="#" onClick={(e) => pageNavigation(e)}>
+                    <a className="page-link" href="https://swap/dev/api/people" onClick={(e) => pageNavigation(e)}>
                         {i}
                     </a>
                 </li>
@@ -85,13 +83,13 @@ export default function Table({ input, results, setLoading, previousPage, nextPa
                 <ul className="pagination justify-content-md-center mt-3">
                     {displayPreviousButton && (
                         <li className="page-item">
-                            <a className="page-link" id="previousBtn" onClick={getPrevPage}>Previous</a>
+                            <a className="page-link" href="https://swap/dev/api/people" id="previousBtn" onClick={getPrevPage}>Previous</a>
                         </li>
                     )}
                     {buttonsArray()}
                     {displayNextButton && (
                         <li className="page-item">
-                            <a className="page-link" id="nextBtn" onClick={getNextPage}>Next</a>
+                            <a className="page-link" href="https://swap/dev/api/people" id="nextBtn" onClick={getNextPage}>Next</a>
                         </li>
                     )}
                 </ul>
