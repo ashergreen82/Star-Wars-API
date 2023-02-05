@@ -28,8 +28,8 @@ database is listed as blank in the "species" column.  I had to add the "Human" w
 field.
 
 I learned how to make a button appear or disappear when it's needed, which is what I did for the
-previous and next buttons.  I managed to figure out how to get the page navigation bar at the bottom to only show
-the buttons that actually contain data in it to show.
+previous and next buttons.  I managed to figure out how to get the page navigation bar at the bottom to
+only show the buttons that actually contain data in it to show.
 
 All in all, this project was an amazing learning experience, and I enjoyed every minute of it.  
 
