@@ -2,7 +2,7 @@
 
 *Accessing information in the Star Wars API written in Javascript, HTML, and CSS*
 
-You can run the program from [here](https://63c2f2489ccdc732de19a7b5--bucolic-froyo-de7845.netlify.app/).
+You can run the program from [here](https://63df0376955c2d0c34ae0ba1--silly-brigadeiros-d326dd.netlify.app/).
 <br /><br />
 
 ![screenshot](/src/images/screenshot.jpg/)
