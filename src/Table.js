@@ -1,3 +1,6 @@
+import React from 'react';
+import { API_BASE_URL } from './config';
+
 export default function Table({ input, results, setLoading, previousPage, nextPage, setUrl, pageCount, isSearchData, displayPreviousButton, setdisplayPreviousButton, displayNextButton, setdisplayNextButton }) {
 
     const displayData = results.map((result, key) => {
@@ -31,9 +34,9 @@ export default function Table({ input, results, setLoading, previousPage, nextPa
         const buttonPressed = e.target.innerText;
         let informationToGet = ""
         if (isSearchData === true) {
-            informationToGet = "https://swapi.dev/api/people/?search=" + input + "&page=" + buttonPressed;
+            informationToGet = `${API_BASE_URL}/people/?search=${input}&page=${buttonPressed}`;
         } else {
-            informationToGet = "https://swapi.dev/api/people/?page=" + buttonPressed;
+            informationToGet = `${API_BASE_URL}/people/?page=${buttonPressed}`;
         }
         setUrl(informationToGet);
     }
@@ -43,7 +46,7 @@ export default function Table({ input, results, setLoading, previousPage, nextPa
         for (let i = 1; i < pageCount; i++) {
             buttonList.push(
                 <li key={i} className="page-item">
-                    <a className="page-link" href="https://swap/dev/api/people" onClick={(e) => pageNavigation(e)}>
+                    <a className="page-link" href="#" onClick={(e) => pageNavigation(e)}>
                         {i}
                     </a>
                 </li>
@@ -83,13 +86,13 @@ export default function Table({ input, results, setLoading, previousPage, nextPa
                 <ul className="pagination justify-content-md-center mt-3">
                     {displayPreviousButton && (
                         <li className="page-item">
-                            <a className="page-link" href="https://swap/dev/api/people" id="previousBtn" onClick={getPrevPage}>Previous</a>
+                            <a className="page-link" href="#" id="previousBtn" onClick={getPrevPage}>Previous</a>
                         </li>
                     )}
                     {buttonsArray()}
                     {displayNextButton && (
                         <li className="page-item">
-                            <a className="page-link" href="https://swap/dev/api/people" id="nextBtn" onClick={getNextPage}>Next</a>
+                            <a className="page-link" href="#" id="nextBtn" onClick={getNextPage}>Next</a>
                         </li>
                     )}
                 </ul>

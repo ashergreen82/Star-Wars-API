@@ -3,10 +3,11 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import Table from "./Table"
 import headerimage from "./images/Star_Wars_Logo.svg.png"
+import { API_BASE_URL } from './config';
 
 export default function StarWars() {
     const [input, setInput] = useState("");
-    const [url, setUrl] = useState("https://swapi.dev/api/people/?search=");
+    const [url, setUrl] = useState(`${API_BASE_URL}/people/?search=`);
     const [results, setResults] = useState([]);
     const [loading, setLoading] = useState(false);
     const [nextPage, setNextPage] = useState("");
@@ -23,7 +24,7 @@ export default function StarWars() {
 
     function handleSubmit(e) {
         e.preventDefault();
-        setUrl(`https://swapi.dev/api/people/?search=${input}`);
+        setUrl(`${API_BASE_URL}/people/?search=${input}`);
         setIsSearchData(true);
     }
 
