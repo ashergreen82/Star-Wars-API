@@ -7,7 +7,6 @@ import { API_BASE_URL } from './config';
 
 export default function StarWars() {
     const [input, setInput] = useState("");
-    const [searchQuery, setSearchQuery] = useState("");
     const [results, setResults] = useState([]);
     const [loading, setLoading] = useState(false);
     const [nextPage, setNextPage] = useState("");
