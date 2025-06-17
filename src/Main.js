@@ -37,9 +37,11 @@ export default function StarWars() {
                 results.map(async (character) => {
                     try {
                         const [planetRes, speciesRes] = await Promise.all([
-                            character.homeworld ? axios.get(character.homeworld) : { data: { name: 'Unknown' } },
+                            character.homeworld 
+                                ? axios.get(character.homeworld.replace(/^https?:\/\/swapi\.dev\/api\//, `${API_BASE_URL}/`))
+                                : { data: { name: 'Unknown' } },
                             character.species && character.species.length > 0 
-                                ? axios.get(character.species[0])
+                                ? axios.get(character.species[0].replace(/^https?:\/\/swapi\.dev\/api\//, `${API_BASE_URL}/`))
                                 : { data: { name: 'Human' } }
                         ]);
                         
