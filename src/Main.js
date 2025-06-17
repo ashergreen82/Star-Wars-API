@@ -7,7 +7,7 @@ import { API_BASE_URL } from './config';
 
 export default function StarWars() {
     const [input, setInput] = useState("");
-    const [url, setUrl] = useState(`${API_BASE_URL}/people/?search=`);
+    const [searchQuery, setSearchQuery] = useState("");
     const [results, setResults] = useState([]);
     const [loading, setLoading] = useState(false);
     const [nextPage, setNextPage] = useState("");
@@ -16,6 +16,59 @@ export default function StarWars() {
     const [isSearchData, setIsSearchData] = useState(false);
     const [displayPreviousButton, setdisplayPreviousButton] = useState(false);
     const [displayNextButton, setdisplayNextButton] = useState(true);
+    
+    // Helper function to get data through the proxy
+    const fetchData = async (url) => {
+        try {
+            setLoading(true);
+            // If it's a relative URL (for pagination), prepend our API base URL
+            const fullUrl = url.startsWith('http') ? url : `${API_BASE_URL}${url.replace(/^https?:\/\/swapi\.dev\/api\//, '')}`;
+            const response = await axios.get(fullUrl);
+            
+            // Process the data
+            const results = response.data.results || [];
+            
+            // Update pagination
+            setNextPage(response.data.next || "");
+            setPreviousPage(response.data.previous || "");
+            setPageCount(Math.ceil((response.data.count / 10)) + 1);
+            
+            // Process homeworld and species for each character
+            const processedResults = await Promise.all(
+                results.map(async (character) => {
+                    try {
+                        const [planetRes, speciesRes] = await Promise.all([
+                            character.homeworld ? axios.get(character.homeworld) : { data: { name: 'Unknown' } },
+                            character.species && character.species.length > 0 
+                                ? axios.get(character.species[0])
+                                : { data: { name: 'Human' } }
+                        ]);
+                        
+                        return {
+                            ...character,
+                            homeworld: planetRes.data.name,
+                            species: speciesRes.data.name
+                        };
+                    } catch (error) {
+                        console.error('Error processing character:', error);
+                        return {
+                            ...character,
+                            homeworld: 'Unknown',
+                            species: 'Unknown'
+                        };
+                    }
+                })
+            );
+            
+            setResults(processedResults);
+            return response.data;
+        } catch (error) {
+            console.error('Error fetching data:', error);
+            throw error;
+        } finally {
+            setLoading(false);
+        }
+    };
 
     function handleChange(e) {
         e.preventDefault();
@@ -24,31 +77,15 @@ export default function StarWars() {
 
     function handleSubmit(e) {
         e.preventDefault();
-        setUrl(`${API_BASE_URL}/people/?search=${input}`);
+        setSearchQuery(input);
+        fetchData(`/people/?search=${encodeURIComponent(input)}`);
         setIsSearchData(true);
     }
 
+    // Initial load
     useEffect(() => {
-        async function initialStart() {
-            setLoading(true);
-            const response = await axios.get(url);
-            setPreviousPage(response.data.previous);
-            setNextPage(response.data.next);
-            for (let i = 0; i < response.data.results.length; i++) {
-                const planetLocation = response.data.results[i].homeworld;
-                const speciesLocation = response.data.results[i].species;
-                const planet = await axios.get(planetLocation);
-                const species = await axios.get(speciesLocation);
-                response.data.results[i].homeworld = planet.data.name;
-                if (speciesLocation.length) response.data.results[i].species = species.data.name;
-                else response.data.results[i].species = "Human";
-            }
-            setResults(response.data.results);
-            setLoading(false);
-            setPageCount(Math.ceil((response.data.count / 10)) + 1);
-        }
-        initialStart();
-    }, [url])
+        fetchData('/people/');
+    }, [])
 
     const spinnerAndTable = () => {
         if (loading) {
@@ -66,7 +103,7 @@ export default function StarWars() {
                 setLoading={setLoading}
                 nextPage={nextPage}
                 previousPage={previousPage}
-                setUrl={setUrl}
+                onPageChange={fetchData}
                 pageCount={pageCount}
                 isSearchData={isSearchData}
                 displayPreviousButton={displayPreviousButton}

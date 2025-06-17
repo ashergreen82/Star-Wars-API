@@ -1,7 +1,19 @@
 import React from 'react';
-import { API_BASE_URL } from './config';
 
-export default function Table({ input, results, setLoading, previousPage, nextPage, setUrl, pageCount, isSearchData, displayPreviousButton, setdisplayPreviousButton, displayNextButton, setdisplayNextButton }) {
+export default function Table({ 
+    input, 
+    results, 
+    setLoading, 
+    previousPage, 
+    nextPage, 
+    onPageChange, 
+    pageCount, 
+    isSearchData, 
+    displayPreviousButton, 
+    setdisplayPreviousButton, 
+    displayNextButton, 
+    setdisplayNextButton 
+}) {
 
     const displayData = results.map((result, key) => {
         return (
@@ -19,26 +31,23 @@ export default function Table({ input, results, setLoading, previousPage, nextPa
     const getPrevPage = (e) => {
         e.preventDefault();
         if (!previousPage) return;
-        setUrl(previousPage);
+        onPageChange(previousPage);
     }
 
     const getNextPage = (e) => {
         e.preventDefault();
         if (!nextPage) return;
-        setUrl(nextPage);
+        onPageChange(nextPage);
     }
 
-    async function pageNavigation(e) {
+    function pageNavigation(e) {
         e.preventDefault();
-        setLoading(true);
         const buttonPressed = e.target.innerText;
-        let informationToGet = ""
-        if (isSearchData === true) {
-            informationToGet = `${API_BASE_URL}/people/?search=${input}&page=${buttonPressed}`;
+        if (isSearchData) {
+            onPageChange(`/people/?search=${encodeURIComponent(input)}&page=${buttonPressed}`);
         } else {
-            informationToGet = `${API_BASE_URL}/people/?page=${buttonPressed}`;
+            onPageChange(`/people/?page=${buttonPressed}`);
         }
-        setUrl(informationToGet);
     }
 
     function buttonsArray() {
