@@ -46,9 +46,9 @@ export default function Table({ input, results, setLoading, previousPage, nextPa
         for (let i = 1; i < pageCount; i++) {
             buttonList.push(
                 <li key={i} className="page-item">
-                    <a className="page-link" href="#" onClick={(e) => pageNavigation(e)}>
+                    <button className="page-link" onClick={(e) => pageNavigation(e)}>
                         {i}
-                    </a>
+                    </button>
                 </li>
             );
         }
@@ -86,13 +86,13 @@ export default function Table({ input, results, setLoading, previousPage, nextPa
                 <ul className="pagination justify-content-md-center mt-3">
                     {displayPreviousButton && (
                         <li className="page-item">
-                            <a className="page-link" href="#" id="previousBtn" onClick={getPrevPage}>Previous</a>
+                            <button className="page-link" id="previousBtn" onClick={getPrevPage}>Previous</button>
                         </li>
                     )}
                     {buttonsArray()}
                     {displayNextButton && (
                         <li className="page-item">
-                            <a className="page-link" href="#" id="nextBtn" onClick={getNextPage}>Next</a>
+                            <button className="page-link" id="nextBtn" onClick={getNextPage}>Next</button>
                         </li>
                     )}
                 </ul>
