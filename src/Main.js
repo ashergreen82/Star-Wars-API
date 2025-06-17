@@ -76,7 +76,6 @@ export default function StarWars() {
 
     function handleSubmit(e) {
         e.preventDefault();
-        setSearchQuery(input);
         fetchData(`/people/?search=${encodeURIComponent(input)}`);
         setIsSearchData(true);
     }
